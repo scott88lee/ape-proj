@@ -1,0 +1,10 @@
+# ape-proj
+
+CRON job for order status and tracking info.
+
+Pseudo code. inside loop
+//Get order number.
+use order number to get tracking api
+update order status
+
+//
