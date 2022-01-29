@@ -1,7 +1,8 @@
 # ape-proj
 
-Project structure init 
+Project structure
 
-Publlic WWW
+An equipment scheduler app running on NodeJS / Express. 
+Project will follow the Model, View, Controller (MVC) design pattern
 
-Routes API
+Datastore will be a JSON file accessible via NodeJS built-in 'fs' module.
