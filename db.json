@@ -1,1 +1,35 @@
-{"location":"Sydney","date":"2018-01-01","happines":"MAXIMUM"}
+{
+   "excavators": [
+      {
+         "id": 1,
+         "name": "Excavator 1",
+         "description": "This is the first excavator",
+         "status": "active",
+         "location": "New York",
+         "latitude": 40.7128,
+         "longitude": -74.0060,
+         "last_update": "2015-01-01T00:00:00Z",
+         "last_update_by": "admin",
+         "last_update_by_id": 1,
+         "last_update_by_name": "admin",
+         "last_update_by_email": "scxo@gmail.com",
+         "schedule": []
+      },
+      {
+         "id": 2,
+         "name": "Excavator 2",
+         "description": "This is the second excavator",
+         "status": "active",
+         "location": "New York",
+         "latitude": 40.7128,
+         "longitude": -74.0060,
+         "last_update": "2015-01-01T00:00:00Z",
+         "last_update_by": "admin",
+         "last_update_by_id": 1,
+         "last_update_by_name": "admin",
+         "last_update_by_email": "scott@gmail.com"
+      }
+   ],
+   "date": "2018-01-01",
+   "happines": "MAXIMUM"
+}

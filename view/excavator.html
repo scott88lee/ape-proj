@@ -1,0 +1,81 @@
+<html>
+
+<head>
+   <title>Dashboard</title>
+</head>
+
+<body>
+   <div class="container">
+      <nav>
+         <a href="" class='logo'>Dashboard</a>
+         <a href="/excavator.html" class='navlinks'>Manage Excavator</a>
+         <a href="/schedule.html" class='navlinks'>View Schedule</a>
+      </nav>
+      <hr>
+      Today's schedule:
+
+      <div id="app">
+
+      </div>
+      <table>
+         <tr>
+            <th>Time</th>
+            <th>Activity</th>
+         </tr>
+         <tr>
+            <td>8:00</td>
+            <td>Breakfast</td>
+         </tr>
+      </table>
+
+      Spare capacity:
+      <table>
+         <tr>
+            <th>Time</th>
+            <th>Activity</th>
+         </tr>
+         <tr>
+            <td>8:00</td>
+            <td>Breakfast</td>
+         </tr>
+      </table>
+      <button>Butt</button>
+   </div>
+</body>
+
+<style>
+   .logo {
+      font-size: larger;
+      font-weight: 300;
+   }
+
+   .navlinks {
+      float: right;
+   }
+
+   body {
+      padding: 0;
+      margin: 0;
+      line-height: 1;
+      height: 100%;
+   }
+
+   .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 0;
+   }
+</style>
+<script>
+   async function onload() {
+      const response = await fetch('/api');
+      const data = await response.json();
+      console.log(data);
+      const app = document.getElementById('app');
+      app.innerHTML = JSON.stringify(data)
+   }
+   onload();
+   
+</script>
+
+</html>
