@@ -7,12 +7,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/', express.static('view'));
 
 app.get('/api/excavators', (req, res) => {
-    let exc = db.read('db.json');
-    res.send(exc);
+    let data = db.read('db.json');
+    res.send(data);
 })
 
 app.post('/api/excavators', (req, res) => {
-    console.log(req.body)
     let data = db.read('db.json');
     if (data.excavators.length < 6) {
         data.excavators.push(
@@ -35,8 +34,28 @@ app.get('/api/delete/excavators/:id', (req, res) => {
     res.redirect("/excavator.html");
 })
 
-app.get('/api/schedule', (req, res) => {
-    res.send("ok")
+app.get('/api/schedules', (req, res) => {
+    let data = db.read('db.json');
+    let schedule = [];
+
+    for (let i=0; i<data.excavators.length; i++) {
+        let excavator = data.excavators[i];
+
+        if (excavator.schedule){
+            for (let j=0; j<excavator.schedule.length; j++) {
+                schedule.push(
+                    {
+                        id: i, 
+                        name: excavator.name,
+                        site: excavator.schedule[j].location,
+                        start: excavator.schedule[j].start,
+                        end: excavator.schedule[j].end
+                    }
+                )
+            }
+        }
+    }
+    res.send(schedule);
 })
 
 app.get("*", (req, res) => {
