@@ -14,14 +14,24 @@ app.get('/api/excavators', (req, res) => {
 app.post('/api/excavators', (req, res) => {
     console.log(req.body)
     let data = db.read('db.json');
-    data.excavators.push(
-        {
-            id: data.excavators.length + 1,
-            name: req.body.name,
-            description: req.body.description
-        }
-    )
+    if (data.excavators.length < 6) {
+        data.excavators.push(
+            {
+                id: data.excavators.length + 1,
+                name: req.body.name,
+                description: req.body.description
+            }
+        )
+    }
     db.write('db.json', data)
+    res.redirect("/excavator.html");
+})
+
+app.get('/api/delete/excavators/:id', (req, res) => {
+    let id = req.params.id;
+    let data = db.read('db.json');
+    data.excavators.splice(id - 1, 1);
+    db.write('db.json', data);
     res.redirect("/excavator.html");
 })
 
