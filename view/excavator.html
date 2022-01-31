@@ -2,77 +2,85 @@
 
 <head>
    <title>Dashboard</title>
+   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
    <div class="container">
+      <br>
       <nav>
-         <a href="" class='logo'>Dashboard</a>
+         <a href="/" class='logo'>Dashboard</a>
          <a href="/excavator.html" class='navlinks'>Manage Excavator</a>
          <a href="/schedule.html" class='navlinks'>View Schedule</a>
       </nav>
       <hr>
-      Today's schedule:
+      <br>
 
-      <div id="app">
-
+      <div class="left">
+         Excavator lists<br><br>
+         <table id="excavatorList">
+            <tr>
+               <th>ID</th>
+               <th>Excavator</th>
+               <th>Last Deployed</th>
+               <th>Date till</th>
+               <th>Action</th>
+            </tr>
+         </table> 
       </div>
-      <table>
-         <tr>
-            <th>Time</th>
-            <th>Activity</th>
-         </tr>
-         <tr>
-            <td>8:00</td>
-            <td>Breakfast</td>
-         </tr>
-      </table>
+      
+      <div class="right">
+         Add new excavator<br/><br/>
+         <form action="/api/excavators" method="POST">
+            <label for="fname">Excavator name:</label><br>
+            <input type="text" id="fname" name="name" placeholder="Rockwell-100" required><br><br>
+            <label for="lname">Description:</label><br>
+            <input type="text" id="lname" name="description" placeholder="Brand new"><br><br>
+            <input type="submit" value="Submit">
+          </form> 
+      </div>
 
-      Spare capacity:
-      <table>
-         <tr>
-            <th>Time</th>
-            <th>Activity</th>
-         </tr>
-         <tr>
-            <td>8:00</td>
-            <td>Breakfast</td>
-         </tr>
-      </table>
-      <button>Butt</button>
+      <br style="clear:both;"/>
+      <br>
+      API Call data
+      <div id="app">
+      </div>
+         
    </div>
 </body>
 
-<style>
-   .logo {
-      font-size: larger;
-      font-weight: 300;
-   }
-
-   .navlinks {
-      float: right;
-   }
-
-   body {
-      padding: 0;
-      margin: 0;
-      line-height: 1;
-      height: 100%;
-   }
-
-   .container {
-      width: 80%;
-      margin: 0 auto;
-      padding: 0;
-   }
-</style>
 <script>
    async function onload() {
-      const response = await fetch('/api');
+      const response = await fetch('/api/excavators');
       const data = await response.json();
       console.log(data);
-      const app = document.getElementById('app');
-      app.innerHTML = JSON.stringify(data)
+      const app = document.getElementById('app')
+      app.innerHTML = JSON.stringify(data.excavators);
+
+      const listEl = document.getElementById('excavatorList');
+
+      for (let i=0; i<data.excavators.length; i++) {
+         let excavator = data.excavators[i]
+         let row = document.createElement("tr")
+         let cell1 = document.createElement("td")
+         let cell2 = document.createElement("td")
+         let cell3 = document.createElement("td")
+         let cell4 = document.createElement("td")
+         let cell5 = document.createElement("td")
+         cell1.innerHTML = excavator.id;
+         cell2.innerHTML = excavator.name;
+         if (excavator.schedule){
+            cell3.innerHTML = excavator.schedule[0].location;
+            cell4.innerHTML = excavator.schedule[0].end;
+         }
+         cell5.innerHTML = "Delete";
+         row.append(cell1)
+         row.append(cell2)
+         row.append(cell3)
+         row.append(cell4)
+         row.append(cell5)
+         listEl.append(row)
+      }
    }
    onload();
    

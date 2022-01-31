@@ -1,0 +1,46 @@
+.logo {
+    font-size: larger;
+    font-weight: 400;
+}
+
+.navlinks {
+    float: right;
+    margin-left:10px;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    height: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid black;
+    width:auto;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+th, td {
+    border: 1px solid black;
+    padding: 15px;
+    text-align: left;
+  }
+
+.container {
+    width: 80%;
+    max-width:1000px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.left {
+    float:left;
+    width: 60%;
+}
+.right {
+    float:right;
+    width: 40%;
+}
