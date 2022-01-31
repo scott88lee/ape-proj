@@ -26,40 +26,48 @@
                <th>Date till</th>
                <th>Action</th>
             </tr>
-         </table> 
+         </table>
       </div>
-      
+
       <div class="right">
-         Add new excavator<br/><br/>
+         Add new excavator<br /><br />
          <form action="/api/excavators" method="POST">
             <label for="fname">Excavator name:</label><br>
             <input type="text" id="fname" name="name" placeholder="Rockwell-100" required><br><br>
             <label for="lname">Description:</label><br>
             <input type="text" id="lname" name="description" placeholder="Brand new"><br><br>
             <input type="submit" value="Submit">
-          </form> 
+         </form>
       </div>
 
-      <br style="clear:both;"/>
+      <br style="clear:both;" />
+      <br>
+      <div id="display">
+      </div>
       <br>
       API Call data
+      
       <div id="app">
       </div>
-         
+
    </div>
 </body>
 
 <script>
    async function onload() {
+      //Get excavator data by calling API backend
       const response = await fetch('/api/excavators');
       const data = await response.json();
+
+
       console.log(data);
       const app = document.getElementById('app')
       app.innerHTML = JSON.stringify(data.excavators);
 
+      // Display list of excavators in table
       const listEl = document.getElementById('excavatorList');
 
-      for (let i=0; i<data.excavators.length; i++) {
+      for (let i = 0; i < data.excavators.length; i++) {
          let excavator = data.excavators[i]
          let row = document.createElement("tr")
          let cell1 = document.createElement("td")
@@ -67,13 +75,23 @@
          let cell3 = document.createElement("td")
          let cell4 = document.createElement("td")
          let cell5 = document.createElement("td")
-         cell1.innerHTML = excavator.id;
+         cell1.innerHTML = i + 1;
          cell2.innerHTML = excavator.name;
-         if (excavator.schedule){
+         cell2.addEventListener('click', function() {
+            document.getElementById('display').innerHTML = JSON.stringify(excavator);
+            
+         });
+         if (excavator.schedule) {
             cell3.innerHTML = excavator.schedule[0].location;
             cell4.innerHTML = excavator.schedule[0].end;
          }
          cell5.innerHTML = "Delete";
+         cell5.addEventListener("click", function () {
+            let text = "Are you sure you want to delete this excavator?\nThe associated schedule and assignments will be lost!\n";
+            if (confirm(text) == true) {
+               window.location.href = '/api/delete/excavators/' + (i + 1);
+            }
+         });
          row.append(cell1)
          row.append(cell2)
          row.append(cell3)
@@ -83,7 +101,7 @@
       }
    }
    onload();
-   
+
 </script>
 
 </html>
