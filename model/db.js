@@ -1,11 +1,13 @@
 const fs = require('fs');
+const file = 'db.json';
 
-module.exports = {
-   read: (file) => {
-      let data = fs.readFileSync(file, 'utf8');
-      return JSON.parse(data);
-   },
-   write: (file, data) => {
-      fs.writeFileSync(file, JSON.stringify(data));
-   }
+function read() {
+   let data = fs.readFileSync(file, 'utf8');
+   return JSON.parse(data);
 }
+
+function write(data) {
+   fs.writeFileSync(file, JSON.stringify(data));
+}
+
+module.exports = { read, write };
