@@ -1,5 +1,5 @@
 const fs = require('fs');
-const file = 'db.json';
+const file = 'fileStore.json';
 
 function read() {
    let data = fs.readFileSync(file, 'utf8');

@@ -59,16 +59,14 @@
       const response = await fetch('/api/excavators');
       const data = await response.json();
 
-
-      console.log(data);
       const app = document.getElementById('app')
-      app.innerHTML = JSON.stringify(data.excavators);
+      app.innerHTML = JSON.stringify(data);
 
       // Display list of excavators in table
       const listEl = document.getElementById('excavatorList');
 
-      for (let i = 0; i < data.excavators.length; i++) {
-         let excavator = data.excavators[i]
+      for (let i = 0; i < data.length; i++) {
+         let excavator = data[i]
          let row = document.createElement("tr")
          let cell1 = document.createElement("td")
          let cell2 = document.createElement("td")

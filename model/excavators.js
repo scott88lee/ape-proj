@@ -1,11 +1,13 @@
-const db = require('./db');
+const db = require('../db');
 
-function getAllExcavators() {
+function getAll() {
+   console.log("model > getAll");
    let data = db.read();
    return data.excavators;
 }
 
-function addExcavator(excavator) {
+function addNew(excavator) {
+   console.log("model > addNew");
    let data = db.read();
    if (data.excavators.length < 6) {
       data.excavators.push(excavator);
@@ -16,10 +18,10 @@ function addExcavator(excavator) {
    return false;
 }
 
-function deleteExcavator(id) {
+function deleteOne(id) {
    let data = db.read();
    data.excavators.splice(id - 1, 1);
-   db.write('db.json', data);
+   db.write(data);
    return data;
 }
 
@@ -39,8 +41,8 @@ function isAssigned(id, date) {
 }
 
 module.exports = { 
-   getAllExcavators,
-   addExcavator,
-   deleteExcavator,
+   getAll,
+   addNew,
+   deleteOne,
    isAssigned 
 };

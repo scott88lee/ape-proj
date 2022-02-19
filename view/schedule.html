@@ -14,37 +14,46 @@
             <a href="/schedule.html" class='navlinks'>View Schedule</a>
         </nav>
         <hr>
-        Today's schedule:
-        <div id="app">
 
+        <div id="selector">
+            <label for="modes">Get schedule by:</label>
+            <select name="modes" id="modes" style="height: 30;" onchange="viewSelection()">
+                <option disabled selected value> - Select Option - </option>
+                <option value="0">Week</option>
+                <option value="1">Date Range</option>
+            </select>
         </div>
-        <table>
-            <tr>
-                <th>Time</th>
-                <th>Activity</th>
-            </tr>
-            <tr>
-                <td>8:00</td>
-                <td>Breakfast</td>
-            </tr>
-        </table>
 
-        Spare capacity:
-        <table>
-            <tr>
-                <th>Time</th>
-                <th>Activity</th>
-            </tr>
-            <tr>
-                <td>8:00</td>
-                <td>Breakfast</td>
-            </tr>
-        </table>
-        <button>Butt</button>
-    </div>
+        <div>            
+            <label for="start">From:</label>
+            <input type="date" id="dateStart" name="start" style="display: none";/>
+            <label for="end">To:</label>
+            <input type="date" id="end" name="end" />
+            <button onclick="getSchedule();">View</button>
+        </div>
 </body>
 
 <script>
+    function viewSelection() {
+        let mode = document.getElementById('modes').value
+        if (mode == 0) {
+            document.getElementById('dateStart').style.display = 'none'
+        } else {
+            document.getElementById('dateStart').style.display = 'block'
+        }
+    }
+
+    async function getSchedule() {
+        let mode = document.getElementById('modes').value == '0' ? 'week' : 'range'
+        let start = document.getElementById('dateStart').value
+        let end = document.getElementById('end').value
+
+        const response = await fetch('/api/schedule?mode=' + mode + '&start=' + start + '&end=' + end);
+        console.log(response)
+        const data = await response.json();
+        console.log(data);
+    }
+
     function createCalendar(year, month) {
 
         let mon = month - 1; // months in JS are 0..11, not 1..12

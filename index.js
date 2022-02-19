@@ -11,10 +11,10 @@ const ctl = require('./controller/main');
 
 //API Routes
 app.get('/api/excavators', ctl.getAllExcavators);
-// app.post('/api/excavators', ctl.addExcavator);
-// app.get('/api/delete/excavators/:id', ctl.deleteExcavator);
+app.post('/api/excavators', ctl.addExcavator);
+app.get('/api/delete/excavators/:id', ctl.deleteExcavator);
 
-// app.get('/api/schedules', ctl.getAllSchedules);
+app.get('/api/schedule', ctl.getSchedule);
 
 //404 Error
 app.get("*", (req, res) => {
