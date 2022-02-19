@@ -31,8 +31,13 @@
             <input type="date" id="end" name="end" />
             <button onclick="getSchedule();">View</button>
         </div>
-</body>
+        <hr>
+        <div id="display">
 
+        </div>
+</body>
+<script src="./scripts/dates.js"></script>
+<script src="./scripts/enum.js"></script>
 <script>
     function viewSelection() {
         let mode = document.getElementById('modes').value
@@ -41,27 +46,6 @@
         } else {
             document.getElementById('dateStart').style.display = 'block'
         }
-    }
-
-    function getMonday(date) {
-        let d = new Date(date);
-        let day = d.getDay(),
-            diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
-        return new Date(d.setDate(diff));
-    }
-
-    function ddmmyyyy(date) {
-        var month = date.getMonth() + 1;
-        var day = date.getDate();
-        var year = date.getFullYear();
-        return day + '/' + month + '/' + year;
-    }
-
-    function yyyymmdd(date) {
-        var month = date.getMonth() + 1;
-        var day = date.getDate();
-        var year = date.getFullYear();
-        return year + '-' + month + '-' + day;
     }
 
     async function getSchedule() {
@@ -79,75 +63,81 @@
             end = yyyymmdd(end)
         }
 
+        //Call API to get schedule
         const response = await fetch('/api/schedule?start=' + start + '&end=' + end);
-        console.log(response)
-        const data = await response.json();
-        console.log(data);
-    }
-
-    function createCalendar(year, month) {
-
-        let mon = month - 1; // months in JS are 0..11, not 1..12
-        let d = new Date(year, mon);
-
-        let table = '<table><tr><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th><th>Saturday</th><th>Sunday</th></tr><tr>';
-
-        // spaces for the first row
-        // from Monday till the first day of the month
-        // * * * 1  2  3  4
-        for (let i = 0; i < getDay(d); i++) {
-            table += '<td></td>';
-        }
-
-        // <td> with actual dates
-        while (d.getMonth() == mon) {
-            table += '<td>' + d.getDate() + '</td>';
-
-            if (getDay(d) % 7 == 6) { // sunday, last day of week - newline
-                table += '</tr><tr>';
-            }
-
-            d.setDate(d.getDate() + 1);
-        }
-
-        // add spaces after last days of month for the last row
-        // 29 30 31 * * * *
-        if (getDay(d) != 0) {
-            for (let i = getDay(d); i < 7; i++) {
-                table += '<td></td>';
-            }
-        }
-
-        // close the table
-        table += '</tr></table>';
-
-        return table;
-    }
-
-    function getDay(date) { // get day number from 0 (monday) to 6 (sunday)
-        let day = date.getDay();
-        if (day == 0) day = 7; // make Sunday (0) the last day
-        return day - 1;
-    }
-
-    async function onload() {
-        //Get schedule information by calling API backend
-        const response = await fetch('/api/schedules');
         const data = await response.json();
 
-        //show api response
-        const app = document.getElementById('app')
-        app.innerHTML = JSON.stringify(data);
-
-        //create calendar
-        let d = new Date();
-        let calendar = createCalendar(d.getFullYear(), d.getMonth() + 1);
-        app.innerHTML += calendar;
+        if (data.length > 0) {
+            //Display schedule
+            renderView(start, end, data, mode)
+        } else {
+            document.getElementById('display').innerHTML = '<h1>No schedule found</h1>'
+        }
     }
 
-    onload();
+    function renderView(start, end, data, mode) {
+        let display = document.getElementById('display')
+        display.innerHTML = ''
+        let dateRange = enumerateDates(start, end)
 
-</script>
+        let table = document.createElement('table')
+
+        if (mode == 'range') { //Display date range Fig.1
+            yAxis = dateRange
+            xAxis = enumerateExcavators(data);
+
+            //Create table header
+            let header = table.insertRow();
+            cell1 = header.insertCell()
+            cell1.innerHTML = '<b>Date</b>'
+            cell2 = header.insertCell()
+            cell2.innerHTML = '<b>Day</b>'
+
+            for (let i = 0; i<xAxis.length; i++) {
+                let newCell = header.insertCell()
+                newCell.innerHTML = xAxis[i];
+            }
+
+            //Populate table
+            for (let i = 0; i < yAxis.length; i++) {
+                let row = table.insertRow()
+                let firstCell = row.insertCell()
+                firstCell.innerHTML = yAxis[i]
+                let secondCell = row.insertCell()
+                secondCell.innerHTML = getDayOfWeek(yAxis[i])
+
+                //Fill in data
+                for (let j = 0; j < xAxis.length; j++) {
+                    let newCell = row.insertCell()
+                    newCell.innerHTML = findSite(yAxis[i], xAxis[j], data)
+                }
+            }
+        }
+        else if (mode == 'week') {
+            yAxis = enumerateSites(data);
+            xAxis = dateRange
+        }
+        display.appendChild(table)
+    }
+
+    function findSite(date, excavator, data) {
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].date == date && data[i].excavator == excavator) {
+                return data[i].site
+            }
+        }
+        return ''
+    }
+
+    function findExcavator(date, site, data) {
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].date == date && data[i].site.toLowerCase() == site.toLowerCase()) {
+                return data[i].excavator
+            }
+        }
+        return ''
+    }
+
 </script>
 
 </html>
