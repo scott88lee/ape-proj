@@ -24,9 +24,9 @@
             </select>
         </div>
 
-        <div>            
+        <div>
             <label for="start">From:</label>
-            <input type="date" id="dateStart" name="start" style="display: none";/>
+            <input type="date" id="dateStart" name="start" style="display: none" ; />
             <label for="end">To:</label>
             <input type="date" id="end" name="end" />
             <button onclick="getSchedule();">View</button>
@@ -43,12 +43,43 @@
         }
     }
 
+    function getMonday(date) {
+        let d = new Date(date);
+        let day = d.getDay(),
+            diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+        return new Date(d.setDate(diff));
+    }
+
+    function ddmmyyyy(date) {
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var year = date.getFullYear();
+        return day + '/' + month + '/' + year;
+    }
+
+    function yyyymmdd(date) {
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var year = date.getFullYear();
+        return year + '-' + month + '-' + day;
+    }
+
     async function getSchedule() {
+        //Get viewing mode
         let mode = document.getElementById('modes').value == '0' ? 'week' : 'range'
         let start = document.getElementById('dateStart').value
         let end = document.getElementById('end').value
 
-        const response = await fetch('/api/schedule?mode=' + mode + '&start=' + start + '&end=' + end);
+        if (mode == 'week') {
+            //Calculate start and end date
+            start = getMonday(end)
+            end = new Date(start)
+            end.setDate(end.getDate() + 6)
+            start = yyyymmdd(start)
+            end = yyyymmdd(end)
+        }
+
+        const response = await fetch('/api/schedule?start=' + start + '&end=' + end);
         console.log(response)
         const data = await response.json();
         console.log(data);

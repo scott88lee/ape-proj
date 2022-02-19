@@ -1,4 +1,6 @@
 const excavators = require('../model/excavators');
+const dates = require('../helpers/dates');
+const schedule = require('../model/schedule');
 
 module.exports = {
     getAllExcavators: (req, res) => {
@@ -33,5 +35,8 @@ module.exports = {
     getSchedule: (req, res) => {
         console.log("CTL > getSchedule");
         console.log(req.query);
+        let data = schedule.getRange(req.query.start, req.query.end);
+        console.table(data);
+        res.send(data)
     }
 }

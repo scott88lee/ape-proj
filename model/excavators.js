@@ -1,13 +1,13 @@
 const db = require('../db');
 
 function getAll() {
-   console.log("model > getAll");
+   console.log("model > excavator > getAll");
    let data = db.read();
    return data.excavators;
 }
 
 function addNew(excavator) {
-   console.log("model > addNew");
+   console.log("model > excavator > addNew");
    let data = db.read();
    if (data.excavators.length < 6) {
       data.excavators.push(excavator);
