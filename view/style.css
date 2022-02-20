@@ -13,12 +13,18 @@ body {
     margin: 0;
     line-height: 1;
     height: 100%;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+A {
+  text-decoration: none;
+  color: #000;
 }
 
 table {
     border-collapse: collapse;
     border: 1px solid black;
-    width:auto;
+    width:100%;
 }
 
 tr:nth-child(even) {background-color: #f2f2f2;}
@@ -38,11 +44,11 @@ th, td {
 
 .left {
     float:left;
-    width: 60%;
+    width: 58%;
 }
 .right {
     float:right;
-    width: 40%;
+    width: 38%;
 }
 
  /* The Modal (background) */

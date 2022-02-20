@@ -30,7 +30,7 @@
          </table>
       </div>
 
-      <div class="right">
+      <div class="right" style="">
          Add new excavator<br /><br />
          <form action="/api/excavators" method="POST">
             <label for="fname">Excavator name:</label><br>
@@ -82,7 +82,7 @@
          });
          if (excavator.schedule) {
             cell3.innerHTML = excavator.schedule[0].location;
-            cell4.innerHTML = excavator.schedule[0].end;
+            cell4.innerHTML = excavator.schedule[0].date;
          }
          cell5.innerHTML = "<button>Delete</button>";
          cell5.addEventListener("click", function () {

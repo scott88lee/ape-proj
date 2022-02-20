@@ -17,25 +17,24 @@
         </nav>
         <hr>
 
-        <div id="selector">
-            <label for="modes">Get schedule by:</label>
-            <select name="modes" id="modes" style="height: 30;" onchange="viewSelection()">
-                <option disabled selected value> - Select Option - </option>
-                <option value="0">Week</option>
-                <option value="1">Date Range</option>
-            </select>
-        </div>
-
-        <div>
+        View schedule by:
+        <select name="modes" id="modes" style="height: 30;" onchange="viewSelection()">
+            <option disabled selected value> - Select Option - </option>
+            <option value="0">Week</option>
+            <option value="1">Date Range</option>
+        </select>
+        &nbsp;
+        <span id="dateStart" style="display:none;">
             <label for="start">From:</label>
-            <input type="date" id="dateStart" name="start" style="display: none" ; />
+            <input type="date" id="start" name="start"/>
             <label for="end">To:</label>
-            <input type="date" id="end" name="end" />
+        </span> &nbsp;
+            <input type="date" id="end" name="end" required/>
             <button onclick="getSchedule();">View</button>
-        </div>
+        </span>
 
         <!-- Trigger/Open The Modal -->
-        <button id="myBtn">Open Modal</button>
+        <button id="myBtn" style="float: right; margin-top: 1px;">Assign Excavator</button>
 
         <!-- The Modal -->
         <div id="addModal" class="modal">
@@ -64,6 +63,8 @@
 
 
         <hr>
+        <br>
+        <div id="queryRange"></div><br>
         <div id="display">
         </div><br><br>
 </body>
@@ -76,14 +77,14 @@
         if (mode == 0) {
             document.getElementById('dateStart').style.display = 'none'
         } else {
-            document.getElementById('dateStart').style.display = 'block'
+            document.getElementById('dateStart').style.display = 'inline'
         }
     }
 
     async function getSchedule() {
         //Get viewing mode
         let mode = document.getElementById('modes').value == '0' ? 'week' : 'range'
-        let start = document.getElementById('dateStart').value
+        let start = document.getElementById('start').value
         let end = document.getElementById('end').value
 
         if (mode == 'week') {
@@ -221,8 +222,8 @@
         )
         let data = await response.json()
         console.log(data)
-        
-        if (!data.sucess){
+
+        if (!data.sucess) {
             document.getElementById('showBypass').style.display = 'inline'
             document.getElementById('message').innerHTML = data.message
         }
