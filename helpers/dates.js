@@ -24,8 +24,22 @@ getMonday = (date) => {
    return new Date(d.setDate(diff));
 }
 
+enumerateDates = (start, end) => {
+   let arr = []
+   let d = new Date(start)
+   let e = new Date(end)
+   
+   while (d <= e) {
+       arr.push(yyyymmdd(d))
+       d.setDate(d.getDate() + 1)
+   }
+   
+   return arr
+}
+
 module.exports = {
    ddmmyyyy,
    yyyymmdd,
-   getMonday
+   getMonday,
+   enumerateDates
 }

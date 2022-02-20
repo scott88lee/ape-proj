@@ -1,4 +1,6 @@
+const e = require('express');
 const db = require('../db');
+const { enumerateDates } = require('../helpers/dates');
 
 getRange = (start, end) => {
    console.log("models> Schedules > getRange");
@@ -71,9 +73,12 @@ lastDeployed = (site) => {
    }
 
    // sort schedule by date descending
-   schedule.sort(function (a, b) {
-      return b.date - a.date
+   schedule.sort(function(a, b) {
+      let keyA = new Date(a.date);
+      let keyB = new Date(b.date);
+      return keyB - keyA;
    });
+   
    return schedule[0].excavator;
 }
 
@@ -104,7 +109,48 @@ checkAvailable = (schedule) => {
 
 addNew = (schedule) => {
    console.log("models> Schedules > addNew");
-   return true;
+   let data = db.read();
+
+   for (let i = 0; i < data.excavators.length; i++) {
+      let excavator = data.excavators[i];
+      
+      //Find excavator
+      if (excavator.name === schedule.excavator) {
+
+         //Check if schedule exists
+         if (excavator.schedule) {
+
+            let dates = enumerateDates(schedule.start, schedule.end);
+            for (let j=0; j<dates.length; j++) {
+               excavator.schedule.push({
+                  location: schedule.site,
+                  date: dates[j]
+               })
+            }
+            excavator.schedule.sort(function(a, b) {
+               let keyA = new Date(a.date);
+               let keyB = new Date(b.date);
+               return keyB - keyA;
+            });
+         } else {
+            excavator.schedule = [];
+            let dates = enumerateDates(schedule.start, schedule.end);
+            for (let j=0; j<dates.length; j++) {
+               excavator.schedule.push({
+                  location: schedule.site,
+                  date: dates[j]
+               })
+            }
+            excavator.schedule.sort(function(a, b) {
+               let keyA = new Date(a.date);
+               let keyB = new Date(b.date);
+               return keyB - keyA;
+            });
+         }
+      }
+   }
+   db.write(data);
+   console.log("Entry recorded");
 }
 
 module.exports = {

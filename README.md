@@ -92,8 +92,9 @@ ToDo:
 Upload image.
 Display Excavator
 MinMax date range
-Add schedule
-Add schedule validation
+Add schedule UI - Done
+Add schedule model
+Add schedule validation - Done
 Dashboard
 Clean up interface
 
