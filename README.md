@@ -40,10 +40,10 @@ Backend APIs will conforms as close as possible to the constraints of REST archi
 `POST > /api/schedule` - Add new schedule  
 
 ### Instructions
-Clone this repository: [ape-proj](https://www.github.com/scott88lee/ape-proj.git)  
+1. Clone this repository: [ape-proj](https://www.github.com/scott88lee/ape-proj.git)  
   
-`npm install`  
+2. CD into the folder and run `npm install`  
 
-`npm run start` or `node index.js`
+3. Start the app by executing `npm run start` or `node index.js`
 
 
