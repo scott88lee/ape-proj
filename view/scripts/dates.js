@@ -1,7 +1,8 @@
 function ddmmyyyy(date) {
-   var month = date.getMonth() + 1;
-   var day = date.getDate();
-   var year = date.getFullYear();
+   let d = new Date(date)
+   var month = d.getMonth() + 1;
+   var day = d.getDate();
+   var year = d.getFullYear();
    return day + '/' + month + '/' + year;
 }
 

@@ -95,7 +95,20 @@ MinMax date range
 Add schedule UI - Done
 Add schedule model - Done
 Add schedule validation - Done
-Clean up interface - P0
+Clean up interface - Done
+Display daterange - Done
+
+Assign Excavator P0
+Render Excavator list
+Render Sitelist
+Clean up interface
+
+
 Dashboard
+Utilisation
+Count
+All time
+week
+Least utilized
 
 

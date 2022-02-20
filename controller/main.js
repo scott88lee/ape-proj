@@ -1,7 +1,6 @@
 const excavators = require('../model/excavators');
 const dates = require('../helpers/dates');
 const schedule = require('../model/schedule');
-const res = require('express/lib/response');
 
 module.exports = {
     getAllExcavators: (req, res) => {
@@ -100,5 +99,31 @@ module.exports = {
             }
         }
         res.send(payload);
+    },
+
+    getAssignments: (req, res) => {
+        console.log("CTL > getAssignments");
+        let arr = excavators.getAll()
+        let payload = {
+            excavators: [],
+            sites: []
+        }
+        
+        let uniqueSites = [];
+        for(let i = 0; i < arr.length; i++) {
+            payload.excavators.push({
+                excavator: arr[i].name,
+            })
+
+            if (arr[i].schedule){
+                //Find unique sites
+                if (!uniqueSites.includes(arr[i].schedule.site)) {
+                    uniqueSites.push(arr[i].schedule.site);
+                }
+            }
+        }
+
+        payload.sites = uniqueSites;
+        res.send(payload)
     }
 }

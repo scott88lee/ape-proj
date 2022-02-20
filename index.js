@@ -17,6 +17,8 @@ app.get('/api/delete/excavators/:id', ctl.deleteExcavator);
 app.get('/api/schedule', ctl.getSchedule);
 app.post('/api/schedule', ctl.addSchedule);
 
+app.get('/api/assignments', ctl.getAssignments);
+
 //404 Error
 app.get("*", (req, res) => {
     res.sendStatus(404)
