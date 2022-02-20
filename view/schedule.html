@@ -1,6 +1,7 @@
-<html>
-
-<head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset=UTF-8>
     <title>Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -76,9 +77,10 @@
 
     function renderView(start, end, data, mode) {
         let display = document.getElementById('display')
+        //Reset the display before rendering
         display.innerHTML = ''
-        let dateRange = enumerateDates(start, end)
 
+        let dateRange = enumerateDates(start, end)
         let table = document.createElement('table')
 
         if (mode == 'range') { //Display date range Fig.1
@@ -87,9 +89,9 @@
 
             //Create table header
             let header = table.insertRow();
-            cell1 = header.insertCell()
+            let cell1 = header.insertCell()
             cell1.innerHTML = '<b>Date</b>'
-            cell2 = header.insertCell()
+            let cell2 = header.insertCell()
             cell2.innerHTML = '<b>Day</b>'
 
             for (let i = 0; i<xAxis.length; i++) {
@@ -112,9 +114,32 @@
                 }
             }
         }
-        else if (mode == 'week') {
+        else if (mode == 'week') { //Display date range Fig.2
             yAxis = enumerateSites(data);
             xAxis = dateRange
+
+            //Create table header
+            let header = table.insertRow();
+            let emptyCell = header.insertCell()
+
+            //Create X-Axis
+            for (let i = 0; i<xAxis.length; i++) {
+                let newCell = header.insertCell()
+                newCell.innerHTML = getDayOfWeek(xAxis[i]);
+            }
+
+            //Populate table
+            for (let i = 0; i < yAxis.length; i++) {
+                let row = table.insertRow()
+                let firstCell = row.insertCell()
+                firstCell.innerHTML = yAxis[i]
+
+                //Fill in data
+                for (let j = 0; j < xAxis.length; j++) {
+                    let newCell = row.insertCell()
+                    newCell.innerHTML = findExcavator(yAxis[i], xAxis[j], data)
+                }
+            }
         }
         display.appendChild(table)
     }
@@ -128,7 +153,7 @@
         return ''
     }
 
-    function findExcavator(date, site, data) {
+    function findExcavator(site, date, data) {
         for (let i = 0; i < data.length; i++) {
             if (data[i].date == date && data[i].site.toLowerCase() == site.toLowerCase()) {
                 return data[i].excavator

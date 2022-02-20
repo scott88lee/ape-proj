@@ -1,6 +1,7 @@
-<html>
-
-<head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset=UTF-8>
    <title>Dashboard</title>
    <link rel="stylesheet" href="style.css">
 </head>
@@ -83,7 +84,7 @@
             cell3.innerHTML = excavator.schedule[0].location;
             cell4.innerHTML = excavator.schedule[0].end;
          }
-         cell5.innerHTML = "Delete";
+         cell5.innerHTML = "<button>Delete</button>";
          cell5.addEventListener("click", function () {
             let text = "Are you sure you want to delete this excavator?\nThe associated schedule and assignments will be lost!\n";
             if (confirm(text) == true) {
