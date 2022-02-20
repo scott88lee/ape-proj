@@ -111,9 +111,7 @@ module.exports = {
         
         let uniqueSites = [];
         for(let i = 0; i < arr.length; i++) {
-            payload.excavators.push({
-                excavator: arr[i].name,
-            })
+            payload.excavators.push(arr[i].name)
 
             if (arr[i].schedule){
                 //Find unique sites

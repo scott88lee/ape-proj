@@ -252,11 +252,14 @@
         let response = await fetch('/api/assignments');
         let data = await response.json();
 
+        //reset options
+        document.getElementById('assignExcavator').innerHTML=''
+
         //loop over data length
-        for(let i=0; i<data.excavators.length; i++){
+        for(let i in data.excavators){
             let opt = document.createElement('option')
-            opt.innerHTML = data.excavators[i].excavator
-            opt.value = data.excavators[i].excavator
+            opt.innerHTML = data.excavators[i]
+            opt.value = data.excavators[i]
             document.getElementById('assignExcavator').appendChild(opt)
         }
         document.getElementById('message').innerHTML = data
