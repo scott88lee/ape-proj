@@ -1,17 +1,20 @@
 # APE-Assignment
 
-An equipment scheduler app running on NodeJS / Express. 
-Project will follow the Model, View, Controller (MVC) design pattern
+A heavy equipment scheduler app running on NodeJS / Express. 
+Project will follow the Model, View, Controller (MVC) software design pattern, Commonly used to implement user interfaces, data, and controlling logic. It emphasizes a separation between the software's business logic and display. This "separation of concerns" provides for a better division of labor and improved maintenance.
 
 Datastore will be a JSON file accessible via NodeJS built-in 'fs' module.
+A simple driver `db.js` is created to read and write to `fileStore.json`
+And the models file, `model>excavator.js` and `model>schedule.js` are responsible for extracting the relevant information from the datastore.
+
+`controller>main.js` will be responsible for performing business logic, while the public `view` folder will be responsible for calling the APIs and displaying the information in the prescribed assignment format.
 ```
 Project structure
 ├── /node_modules*
 ├── /helpers
 ├── /model
 │ ├── excavators.js
-│ ├── db.js
-│ └── db.json
+│ └── schedule.js
 ├── /view
 │ ├── /scripts
 │ ├── /stylesheets
@@ -21,7 +24,17 @@ Project structure
 ├── /controllers
 │ └── main.js
 ├── index.js
+├── db.js
+├── fileStore.json
 ├── package.json
 └── README.md
 ```
+
+Backen APIs will conforms as close as possible to the constraints of REST architectural style and allows for interaction with RESTful web services.
+
+`GET > /api/excavators` - List all excavators
+`POST > /api/excavators` - Add new excavator
+`GET > /api/schedule` - Get schedules
+`POST > /api/schedule` - Add new schedule
+
 
