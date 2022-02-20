@@ -49,6 +49,9 @@
                 End:<input type="date" id="assignEnd" name="assignEnd" />
                 Excavator: <input type="text" id="assigEexcavator" name="assigEexcavator" />
                 Site: <input type="text" id="assigSite" name="assigSite" />
+                <span id="showBypass" style="display: none;">
+                    Bypass recommendation: <input type="checkbox" id="bypass" value="bypass" />
+                </span>
 
                 <button onclick="assignRequest()">Assign</button>
                 <br>
@@ -196,19 +199,33 @@
         let end = document.getElementById('assignEnd').value
         let excavator = document.getElementById('assigEexcavator').value
         let site = document.getElementById('assigSite').value
+        let bypass = document.getElementById('bypass').checked
 
         let requestBody = {
             start: start,
             end: end,
             excavator: excavator,
-            site: site
+            site: site,
+            bypass: bypass
         }
 
         //Call API to get schedule
-        let response = await fetch('/api/assign', {method: 'POST', body: JSON.stringify(requestBody)});
-        let data = response.json()
-
-        document.getElementById('message').innerHTML = JSON.stringify(data)
+        let response = await fetch('/api/schedule',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            }
+        )
+        let data = await response.json()
+        console.log(data)
+        
+        if (!data.sucess){
+            document.getElementById('showBypass').style.display = 'inline'
+            document.getElementById('message').innerHTML = data.message
+        }
     }
 
 </script>

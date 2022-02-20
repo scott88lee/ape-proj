@@ -15,6 +15,7 @@ app.post('/api/excavators', ctl.addExcavator);
 app.get('/api/delete/excavators/:id', ctl.deleteExcavator);
 
 app.get('/api/schedule', ctl.getSchedule);
+app.post('/api/schedule', ctl.addSchedule);
 
 //404 Error
 app.get("*", (req, res) => {
