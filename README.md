@@ -46,4 +46,6 @@ Backend APIs will conforms as close as possible to the constraints of REST archi
 
 3. Start the app by executing `npm run start` or `node index.js`
 
+4. Point broswer into  	[localhost:8080](http://localhost:8080/)
+
 
