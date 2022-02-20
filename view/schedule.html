@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset=UTF-8>
     <title>Dashboard</title>
     <link rel="stylesheet" href="style.css">
@@ -32,12 +33,40 @@
             <input type="date" id="end" name="end" />
             <button onclick="getSchedule();">View</button>
         </div>
+
+        <!-- Trigger/Open The Modal -->
+        <button id="myBtn">Open Modal</button>
+
+        <!-- The Modal -->
+        <div id="addModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>Assign Excavator</p>
+
+                Start: <input type="date" id="assignStart" name="assignStart" />
+                End:<input type="date" id="assignEnd" name="assignEnd" />
+                Excavator: <input type="text" id="assigEexcavator" name="assigEexcavator" />
+                Site: <input type="text" id="assigSite" name="assigSite" />
+
+                <button onclick="assignRequest()">Assign</button>
+                <br>
+                <div id="message">
+
+                </div>
+            </div>
+
+        </div>
+
+
         <hr>
         <div id="display">
         </div><br><br>
 </body>
 <script src="./scripts/dates.js"></script>
 <script src="./scripts/enum.js"></script>
+<script src="./scripts/modal.js"></script>
 <script>
     function viewSelection() {
         let mode = document.getElementById('modes').value
@@ -94,7 +123,7 @@
             let cell2 = header.insertCell()
             cell2.innerHTML = '<b>Day</b>'
 
-            for (let i = 0; i<xAxis.length; i++) {
+            for (let i = 0; i < xAxis.length; i++) {
                 let newCell = header.insertCell()
                 newCell.innerHTML = xAxis[i];
             }
@@ -123,7 +152,7 @@
             let emptyCell = header.insertCell()
 
             //Create X-Axis
-            for (let i = 0; i<xAxis.length; i++) {
+            for (let i = 0; i < xAxis.length; i++) {
                 let newCell = header.insertCell()
                 newCell.innerHTML = getDayOfWeek(xAxis[i]);
             }
@@ -160,6 +189,26 @@
             }
         }
         return ''
+    }
+
+    async function assignRequest() {
+        let start = document.getElementById('assignStart').value
+        let end = document.getElementById('assignEnd').value
+        let excavator = document.getElementById('assigEexcavator').value
+        let site = document.getElementById('assigSite').value
+
+        let requestBody = {
+            start: start,
+            end: end,
+            excavator: excavator,
+            site: site
+        }
+
+        //Call API to get schedule
+        let response = await fetch('/api/assign', {method: 'POST', body: JSON.stringify(requestBody)});
+        let data = response.json()
+
+        document.getElementById('message').innerHTML = JSON.stringify(data)
     }
 
 </script>
