@@ -8,8 +8,10 @@ A simple driver `db.js` is created to read and write to `fileStore.json`
 And the models file, `model>excavator.js` and `model>schedule.js` are responsible for extracting the relevant information from the datastore.
 
 `controller>main.js` will be responsible for performing business logic, while the public `view` folder will be responsible for calling the APIs and displaying the information in the prescribed assignment format.
+
 ```
-Project structure
+PROJECT STRUCTURE  
+
 ├── /node_modules*
 ├── /helpers
 ├── /model
@@ -30,11 +32,18 @@ Project structure
 └── README.md
 ```
 
-Backen APIs will conforms as close as possible to the constraints of REST architectural style and allows for interaction with RESTful web services.
+Backend APIs will conforms as close as possible to the constraints of REST architectural style and allows for interaction with RESTful web services.
 
-`GET > /api/excavators` - List all excavators
-`POST > /api/excavators` - Add new excavator
-`GET > /api/schedule` - Get schedules
-`POST > /api/schedule` - Add new schedule
+`GET > /api/excavators` - List all excavators  
+`POST > /api/excavators` - Add new excavator  
+`GET > /api/schedule` - Get schedules  
+`POST > /api/schedule` - Add new schedule  
+
+### Instructions
+Clone this repository: [ape-proj](https://www.github.com/scott88lee/ape-proj.git)  
+  
+`npm install`  
+
+`npm run start` or `node index.js`
 
 
