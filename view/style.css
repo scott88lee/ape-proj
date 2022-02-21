@@ -1,11 +1,13 @@
 .logo {
-    font-size: larger;
-    font-weight: 400;
+    font-size: x-large;
+    font-weight: 350;
 }
 
 .navlinks {
     float: right;
     margin-left:10px;
+    font-size: x-large;
+    margin-bottom: 6px;
 }
 
 body {
