@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset=UTF-8>
     <title>Dashboard</title>
     <link rel="stylesheet" href="style.css">
@@ -15,32 +16,88 @@
             <a href="/excavator.html" class='navlinks'>Manage Excavator</a>
             <span class="navlinks">|</span>
             <a href="/schedule.html" class='navlinks'>View Schedule</a>
-        </nav><hr>
-        Today's schedule:
-
-        <table>
-            <tr>
-                <th>Time</th>
-                <th>Activity</th>
-            </tr>
-            <tr>
-                <td>8:00</td>
-                <td>Breakfast</td>
-            </tr>
-        </table>
-
-        Spare capacity:
-        <table>
-            <tr>
-                <th>Time</th>
-                <th>Activity</th>
-            </tr>
-            <tr>
-                <td>8:00</td>
-                <td>Breakfast</td>
-            </tr>
-        </table>
-        <button>Butt</button>
+        </nav>
+        <hr><br>
+        This week's schedule:<br><br>
+        <div id="display">
+        </div><br><br>
+        <div id="Stats"></div>  
     </div>
+    <script src="./scripts/dates.js"></script>
+    <script src="./scripts/enum.js"></script>
+    <script>
+        async function onload() {
+            let d = new Date();
+            let start = getMonday(d)
+            let end = new Date(start)
+            end.setDate(end.getDate() + 6)
+            start = yyyymmdd(start)
+            end = yyyymmdd(end)
+
+            //Call API to get schedule
+            const response = await fetch('/api/schedule?start=' + start + '&end=' + end);
+            const data = await response.json();
+
+            if (data.length > 0) {
+                //Display schedule
+                renderView(start, end, data, 'week')
+            } else {
+                document.getElementById('display').innerHTML = 'No schedule found'
+            }
+
+            //Call API to get excavator stats
+            console.log(data)
+        }
+
+
+        function renderView(start, end, data, mode) {
+            let display = document.getElementById('display')
+            //Reset the display before rendering
+            display.innerHTML = ''
+
+            let dateRange = enumerateDates(start, end)
+            let table = document.createElement('table')
+
+            let yAxis = enumerateSites(data);
+            let xAxis = dateRange
+
+            //Create table header
+            let header = table.insertRow();
+            let emptyCell = header.insertCell()
+
+            //Create X-Axis
+            for (let i = 0; i < xAxis.length; i++) {
+                let newCell = header.insertCell()
+                newCell.innerHTML = getDayOfWeek(xAxis[i]) + '<br>' + xAxis[i]+ '<br>';
+            }
+
+            //Populate table
+            for (let i = 0; i < yAxis.length; i++) {
+                let row = table.insertRow()
+                let firstCell = row.insertCell()
+                firstCell.innerHTML = yAxis[i]
+
+                //Fill in data
+                for (let j = 0; j < xAxis.length; j++) {
+                    let newCell = row.insertCell()
+                    newCell.innerHTML = findExcavator(yAxis[i], xAxis[j], data)
+                }
+            }
+
+            display.appendChild(table)
+        }
+
+        function findExcavator(site, date, data) {
+            for (let i = 0; i < data.length; i++) {
+                if (data[i].date == date && data[i].site.toLowerCase() == site.toLowerCase()) {
+                    return data[i].excavator
+                }
+            }
+            return ''
+        }
+
+        onload();
+    </script>
 </body>
+
 </html>
