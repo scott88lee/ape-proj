@@ -1,1 +1,79 @@
-{"excavators":[{"name":"Caterpiller","description":"This is the first excavator","imglink":"img1.jpg","schedule":[{"location":"Site 121","date":"2022-02-14"},{"location":"Site 121","date":"2022-02-13"},{"location":"Site 121","date":"2022-02-12"},{"location":"Site 121","date":"2022-02-11"},{"location":"Site 121","date":"2022-02-10"}]},{"name":"Fuji Heavy","description":"This is the second excavator","imglink":"img1.jpg","schedule":[{"location":"Site 232","date":"2022-02-16"}]},{"name":"SamYeung","description":"This is the third excavator","imglink":"img1.jpg","schedule":[{"location":"Site 343","date":"2022-02-14"},{"location":"Site 343","date":"2022-02-13"},{"location":"Site 343","date":"2022-02-12"},{"location":"Site 343","date":"2022-02-11"},{"location":"Site 343","date":"2022-02-10"}]},{"name":"qwe","description":"qwe","imglink":"img1.jpg"},{"name":"123","description":"123","imglink":"img2.jpg"}]}
+{
+   "excavators": [
+      {
+         "name": "Caterpiller",
+         "description": "This is the first excavator",
+         "imglink": "img1.jpg",
+         "schedule": [
+            {
+               "location": "Site 121",
+               "date": "2022-02-14"
+            },
+            {
+               "location": "Site 121",
+               "date": "2022-02-13"
+            },
+            {
+               "location": "Site 121",
+               "date": "2022-02-12"
+            },
+            {
+               "location": "Site 121",
+               "date": "2022-02-11"
+            },
+            {
+               "location": "Site 121",
+               "date": "2022-02-10"
+            }
+         ]
+      },
+      {
+         "name": "Fuji Heavy",
+         "description": "This is the second excavator",
+         "imglink": "img2.jpg",
+         "schedule": [
+            {
+               "location": "Site 232",
+               "date": "2022-02-16"
+            }
+         ]
+      },
+      {
+         "name": "SamYeung",
+         "description": "This is the third excavator",
+         "imglink": "img1.jpg",
+         "schedule": [
+            {
+               "location": "Site 343",
+               "date": "2022-02-14"
+            },
+            {
+               "location": "Site 343",
+               "date": "2022-02-13"
+            },
+            {
+               "location": "Site 343",
+               "date": "2022-02-12"
+            },
+            {
+               "location": "Site 343",
+               "date": "2022-02-11"
+            },
+            {
+               "location": "Site 343",
+               "date": "2022-02-10"
+            }
+         ]
+      },
+      {
+         "name": "qwe",
+         "description": "qwe",
+         "imglink": "img1.jpg"
+      },
+      {
+         "name": "123",
+         "description": "123",
+         "imglink": "img2.jpg"
+      }
+   ]
+}
