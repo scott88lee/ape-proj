@@ -47,7 +47,7 @@ module.exports = {
 
     addExcavator: (req, res) => {
         console.log("CTL > addExcavator");
-        uploadImage (req, res, (err) => {
+        uploadImage(req, res, (err) => {
             if (err) {
                 if (err.code == "LIMIT_FILE_SIZE") {
                     return res.send(
@@ -56,7 +56,7 @@ module.exports = {
                 }
                 return res.send(err)
             }
-            
+
             console.log("Request body: " + JSON.stringify(req.body));
 
             let excavator = {
@@ -64,10 +64,10 @@ module.exports = {
                 description: req.body.description,
             }
 
-            if (req.file){
+            if (req.file) {
                 excavator.imglink = req.file.originalname;
             }
-        
+
             let success = excavators.addNew(excavator);
             if (success) {
                 console.log("Success");
@@ -139,6 +139,9 @@ module.exports = {
                             message: 'Please fill in all the fields.'
                         }
                     } else {
+                        let d = new Date(params.start);
+                        d.setDate(d.getDate() + 1);
+                        params.start = dates.yyyymmdd(d);
                         schedule.addNew(params);
                         payload = { success: true, message: "Successfully added" };
                     }
@@ -184,14 +187,14 @@ module.exports = {
             excavators: [],
             sites: []
         }
-        
-        for(let i = 0; i < arr.length; i++) {
+
+        for (let i = 0; i < arr.length; i++) {
             payload.excavators.push(arr[i].name)
 
-            if (arr[i].schedule){
+            if (arr[i].schedule) {
                 console.log("Found schedule");
                 //Find unique sites
-                for (let j=0; j < arr[i].schedule.length; j++) {
+                for (let j = 0; j < arr[i].schedule.length; j++) {
                     if (!payload.sites.includes(arr[i].schedule[j].location)) {
                         payload.sites.push(arr[i].schedule[j].location);
                     }
