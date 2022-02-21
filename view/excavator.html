@@ -34,7 +34,7 @@
 
       <div class="right" style="">
          Add new excavator<br /><br />
-         <form action="/api/excavators" method="POST">
+         <form action="/api/excavators" enctype="multipart/form-data" method="POST">
             <label for="fname">Excavator name:</label><br>
             <input type="text" id="fname" name="name" placeholder="Rockwell-100" required><br><br>
             <label for="lname">Description:</label><br>
