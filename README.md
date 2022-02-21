@@ -82,9 +82,14 @@ The JSON object will be an array of *Excavators*, and the schedule will be anoth
 ### Instructions
 1. Clone this repository: [ape-proj](https://www.github.com/scott88lee/ape-proj.git)  
   
-2. CD into the folder and run `npm install`  
+2. CD into the folder and run `npm run setup` or `npm install`
 
 3. Start the app by executing `npm run start` or `node index.js`
 
 4. Point broswer into  	[localhost:8080](http://localhost:8080/)
 
+###
+Video link:  
+https://youtu.be/zIs5CSXJyes
+
+https://www.dropbox.com/s/8gim3a2m99vgzpq/APE-LeeSeeKeong.mov?dl=0
