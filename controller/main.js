@@ -15,7 +15,7 @@ module.exports = {
             name: req.body.name,
             description: req.body.description,
         }
-
+        
         let success = excavators.addNew(excavator);
         if (success) {
             console.log("Success");
