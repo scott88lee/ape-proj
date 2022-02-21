@@ -51,7 +51,7 @@ module.exports = {
             // Excavator redeployed to different site
             // Need to add one day for maintanance
             let d = new Date(params.start);
-            d.setDate(d.getDate() + 1);
+            d.setDate(d.getDate() - 1);
             params.start = dates.yyyymmdd(d);
             console.log(params);
 
@@ -76,10 +76,21 @@ module.exports = {
                 // Check availablity
                 if (schedule.checkAvailable(params)) {
                     // Add to schedule
-                    schedule.addNew(params);
-                    payload = { success: false, message: "Success" };
+                    if (
+                        params.start == '' || params.start == null
+                        || params.end == '' || params.end == null
+                        || params.site == '' || params.site == null
+                    ) {
+                        payload = {
+                            success: false,
+                            message: 'Please fill in all the fields.'
+                        }
+                    } else {
+                        schedule.addNew(params);
+                        payload = { success: true, message: "Successfully added" };
+                    }
                 } else {
-                    paylaod = {
+                    payload = {
                         success: false,
                         message: `${params.excavator} is not available for selected dates.`
                     }
@@ -89,15 +100,27 @@ module.exports = {
             // Check availablity
             if (schedule.checkAvailable(params)) {
                 // Add to schedule
-                schedule.addNew(params);
-                payload = { success: false, message: "Success" };
+                if (
+                    params.start == '' || params.start == null
+                    || params.end == '' || params.end == null
+                    || params.site == '' || params.site == null
+                ) {
+                    payload = {
+                        success: false,
+                        message: 'Please fill in all the fields.'
+                    }
+                } else {
+                    schedule.addNew(params);
+                    payload = { success: true, message: "Successully added" };
+                }
             } else {
-                paylaod = {
+                payload = {
                     success: false,
                     message: `${params.excavator} is not available for selected dates.`
                 }
             }
         }
+        console.log(payload);
         res.send(payload);
     },
 
@@ -109,19 +132,20 @@ module.exports = {
             sites: []
         }
         
-        let uniqueSites = [];
         for(let i = 0; i < arr.length; i++) {
             payload.excavators.push(arr[i].name)
 
             if (arr[i].schedule){
+                console.log("Found schedule");
                 //Find unique sites
-                if (!uniqueSites.includes(arr[i].schedule.site)) {
-                    uniqueSites.push(arr[i].schedule.site);
+                for (let j=0; j < arr[i].schedule.length; j++) {
+                    if (!payload.sites.includes(arr[i].schedule[j].location)) {
+                        payload.sites.push(arr[i].schedule[j].location);
+                    }
                 }
             }
         }
-
-        payload.sites = uniqueSites;
+        console.log(payload);
         res.send(payload)
     }
 }

@@ -91,24 +91,23 @@ The JSON object will be an array of *Excavators*, and the schedule will be anoth
 ToDo:
 Upload image.
 Display Excavator
-MinMax date range
+
 Add schedule UI - Done
 Add schedule model - Done
 Add schedule validation - Done
 Clean up interface - Done
 Display daterange - Done
 
-Assign Excavator P0
-Render Excavator list
-Render Sitelist
-Clean up interface
+Assign Excavator - Done
+Render Excavator list - Done
+Render Sitelist - Done
+Clean up interface - Done
 
 
 Dashboard
-Utilisation
-Count
-All time
-week
+week's schedule
+Utilisation = numofschedule / numExc * 7
 Least utilized
+Most utilized
 
 

@@ -91,3 +91,22 @@ th, td {
     text-decoration: none;
     cursor: pointer;
   } 
+
+
+  .field-wrap {
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+  }
+  .field-wrap input {
+    width: 100%;
+    flex-grow: 1;
+  }
+  .field-wrap select {
+    width: 100%;
+    flex-grow: 1;
+  }
+  label {
+    margin-right: 20px;
+    width: 110px;
+  }

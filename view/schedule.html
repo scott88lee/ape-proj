@@ -50,15 +50,36 @@
                     <br>Add a new site if not yet available.
                 </p>
                 <hr><br>
-                <div style="float:left;width: 50%;">
-                    <label for="assignExcavator">Excavator: </label>
-                    <select name="assignExcavator" id="assignExcavator">
+                <div style="float:left;width: 48%;">
+
+                    <div class="field-wrap">
+                        <label for="assignExcavator">Excavator: </label>
+                        <select style="width:100%;" name="assignExcavator" id="assignExcavator">
+                        </select><br><br>
+                    </div>
+                    <div class="field-wrap">
+
+                    <label for="assignSite">Site: </label>
+                    <select style="width:100%;" name="assignSite" id="assignSite">
                     </select><br><br>
-                    Site: <input type="text" id="assigSite" name="assigSite" />
+                    </div>  
+                    
+                    <div class="field-wrap" id="newSite" style="display: none;">
+                        <label for="newSite">New site: </label>
+                        <input style="width:100%;" type="text" name="newSite" id="nSite">
+                        <br><br>
+                    </div>
+                    
                 </div>
-                <div style="float: right;width: 50%;">
-                    Start: <input type="date" id="assignStart" name="assignStart" />
-                    End:<input type="date" id="assignEnd" name="assignEnd" />
+                <div style="float:right;width:48%;">
+                    <div class="field-wrap">
+                        <label for="assignStart">Start date: </label>
+                        <input type="date" id="assignStart" name="assignStart" />
+                    </div>
+                    <div class="field-wrap">
+                        <label for="assignEnd">End date: </label>
+                        <input type="date" id="assignEnd" name="assignEnd" />
+                    </div>
                     <span id="showBypass" style="display: none;">
                         Bypass recommendation: <input type="checkbox" id="bypass" value="bypass" />
                     </span>
@@ -66,7 +87,7 @@
                 <br style="clear:both;" />
 
                 <button onclick="assignRequest()">Assign</button>
-                <br>
+                <br><br>
                 <div id="message">
 
                 </div>
@@ -217,8 +238,9 @@
     async function assignRequest() {
         let start = document.getElementById('assignStart').value
         let end = document.getElementById('assignEnd').value
-        let excavator = document.getElementById('assigEexcavator').value
-        let site = document.getElementById('assigSite').value
+        let excavator = document.getElementById('assignExcavator').value
+        let site = document.getElementById('assignSite').value
+        let newSite = document.getElementById('nSite').value
         let bypass = document.getElementById('bypass').checked
 
         let requestBody = {
@@ -228,6 +250,12 @@
             site: site,
             bypass: bypass
         }
+
+        if (site == 'new') {
+            requestBody.site = newSite
+        }
+
+        console.log(requestBody)    
 
         //Call API to get schedule
         let response = await fetch('/api/schedule',
@@ -255,6 +283,7 @@
 
         //reset options
         document.getElementById('assignExcavator').innerHTML=''
+        document.getElementById('assignSite').innerHTML=''
 
         //loop over data length
         for(let i in data.excavators){
@@ -263,7 +292,27 @@
             opt.value = data.excavators[i]
             document.getElementById('assignExcavator').appendChild(opt)
         }
-        document.getElementById('message').innerHTML = data
+
+        for(let i in data.sites){
+            let opt = document.createElement('option')
+            opt.innerHTML = data.sites[i]
+            opt.value = data.sites[i]
+            document.getElementById('assignSite').appendChild(opt)
+        }
+
+        let addnew = document.createElement('option');
+        addnew.innerHTML = 'Add New'
+        addnew.value = 'new'
+        document.getElementById('assignSite').appendChild(addnew)
+
+        let site = document.getElementById('assignSite')
+        site.addEventListener("change", function() {
+            if(site.value == "new"){
+                document.getElementById('newSite').style.display = 'flex'
+            } else {
+                document.getElementById('newSite').style.display = 'none'
+            }
+        })
     }
 
     function onload() {
